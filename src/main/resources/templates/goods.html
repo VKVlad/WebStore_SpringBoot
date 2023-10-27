@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        function displayImagePath(event) {
+            const input = event.target;
+            const filePath = input.value;
+            const fileName = "images/" + filePath.split('\\').pop();  // Get the file name from the file path
+            document.getElementById('image_path').value = fileName;
+        }
+    </script>
+</head>
+<body>
+<h4>Goods</h4><hr/>
+<form th:action="@{/}" method="get">
+    <label for="nazva">Search by name:</label>
+    <input type="text" id="nazva" th:name="nazva" />
+    <input type="submit" value="Search"/>
+</form>
+<div th:each="good: ${goods}">
+    <div class="good-item">
+        <p>ID: <span th:text="${good.id}"></span></p>
+        <p>Название: <span th:text="${good.nazva}"></span></p>
+        <p>Цена: <span th:text="${good.price}"></span></p>
+        <p><a th:href="@{'good/' + ${good.id}}">More...</a></p>
+    </div>
+</div>
+<hr/>
+<h3>Add new good</h3>
+<form th:action="@{/good/create}" method="post" enctype="multipart/form-data">
+    <label for="new_nazva">nazva:</label>
+    <input type="text" id="new_nazva" th:name="nazva" /><br/><br/>
+
+    <label for="category">category:</label>
+    <input type="text" id="category" th:name="category" /><br/><br/>
+
+    <label for="article">article:</label>
+    <input type="text" id="article" th:name="article" /><br/><br/>
+
+    <label for="price">price:</label>
+    <input type="text" id="price" th:name="price" /><br/><br/>
+
+    <label for="priceOpt">priceOpt:</label>
+    <input type="text" id="priceOpt" th:name="priceOpt" /><br/><br/>
+
+    <label for="image_path">Image:</label>
+    <input type="text" id="image_path" th:name="imagePath" ><br><br>
+    <input type="file" id="image_file" name="image_file" accept="image/*" onchange="displayImagePath(event)"><br><br>
+
+    <input type="submit" value="Create" />
+</form>
+
+
+
+</body>
+</html>
