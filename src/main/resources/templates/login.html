@@ -32,10 +32,6 @@
                 <li class="nav-item active">
                     <a class="nav-link" th:href="@{/shop}" href="#">shop</a>
                 </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Sign Up</a>
-                </li>
-
             </ul>
 
         </div>
@@ -69,8 +65,7 @@
             </form>
             <br>
             <h3>OR</h3>
-            <a href="/oauth2/authorization/google" class="btn btn-primary">Sign-In with google </a>
-
+            <a th:href="@{/oauth2/authorization/google}" class="btn btn-primary">Sign-In with google </a>
         </div>
 
     </div>

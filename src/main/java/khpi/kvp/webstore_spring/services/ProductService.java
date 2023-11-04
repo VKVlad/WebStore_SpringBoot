@@ -22,4 +22,7 @@ public class ProductService{
     }
     public void updateProduct(Product product) { productRepository.save(product); }
 
+    public List<Product> getProductsByCategoryId(Integer id) {
+        return productRepository.findAllByCategory_id(id);
+    }
 }

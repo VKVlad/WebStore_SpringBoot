@@ -37,7 +37,9 @@
                     <a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/login}" href="#">login</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/logout}" href="#">logout</a>
+                    <form th:action="@{/logout}" method="post">
+                        <input type="submit" value="Logout" />
+                    </form>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" th:href="@{/cart}" href="#">cart</a>
@@ -65,47 +67,47 @@
                     <!-- Card -->
                     <div class="card wish-list mb-4">
                         <div class="card-body">
-
                             <h5 class="mb-4">Cart (<span th:text="${cartCount}">2</span> items)</h5>
-
-                            <div class="row mb-4" th:each="item, iStat : ${cart}">
+                            <div class="row mb-4" th:each="item : ${cart}">
                                 <div class="col-md-5 col-lg-3 col-xl-3">
                                     <div class="mb-3 mb-md-0">
                                         <img class="img-fluid w-100"
-                                             th:src="@{${'/productImages/' + item.imageName}}"
-                                             src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/12a.jpg" alt="Sample">
-
+                                             th:src="@{${'/images/' + item.key.imageName}}"
+                                             src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/12a.jpg"
+                                             alt="Sample">
                                     </div>
                                 </div>
                                 <div class="col-md-7 col-lg-9 col-xl-9">
                                     <div>
                                         <div class="d-flex justify-content-between">
                                             <div>
-                                                <h5 th:text="${item.name}">Blue denim shirt</h5>
-                                                <p class="mb-3 text-uppercase small">Weight: <span th:text="${item.weight}"></span> grams</p>
-<!--                                                <p class="mb-2 text-uppercase small">Category: <span th:text="${item.category.name}"></span></p>-->
-
+                                                <h5 th:text="${item.key.name}">Blue denim shirt</h5>
+                                                <p class="mb-3 text-uppercase small">PriceOpt: <span th:text="${item.key.priceOpt}"></span> grams</p>
                                             </div>
-
                                         </div>
                                         <div class="mt-5 d-flex justify-content-between align-items-center">
                                             <div>
-                                                <a href="#!" th:href="@{/cart/removeItem/{index}(index=${iStat.index})}"  type="button" class="card-link-secondary small text-uppercase mr-3"><i
-                                                        class="fas fa-trash-alt mr-1"></i> Remove item </a>
-
+                                                <!-- Добавьте форму для редактирования количества и кнопку "Обновить" -->
+                                                <form th:action="@{/cart/updateQuantity/{id}(id=${item.key.getId()})}" method="post">
+                                                    <button type="button" class="btn btn-primary quantity-button" onclick="changeQuantity(this, -1)">-</button>
+                                                    <span th:text="${item.value}" class="quantity-display"></span>
+                                                    <button type="button" class="btn btn-primary quantity-button" onclick="changeQuantity(this, 1)">+</button>
+                                                    <!-- Добавьте скрытое поле для передачи newQuantity в контроллер -->
+                                                    <input type="hidden" name="newQuantity" th:value="${item.value}" />
+                                                    <button type="submit" class="btn btn-success">Update</button>
+                                                </form>
+                                                <a href="#!" th:href="@{/cart/removeItem/{id}(id=${item.key.getId()})}" type="button" class="card-link-secondary small text-uppercase mr-3"><i class="fas fa-trash-alt mr-1"></i> Remove item</a>
                                             </div>
-                                            <p class="mb-0"><span><strong>₹<span th:text="${item.price}"></span></strong></span></p>
+                                            <p class="mb-0"><span><strong>₹<span th:text="${item.key.price * item.value}"></span></strong></span></p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <hr class="mb-4">
-
-                            <p class="text-primary mb-0"><i class="fas fa-info-circle mr-1"></i> Do not delay the purchase, adding
-                                items to your cart does not mean booking them.</p>
-
+                            <p class="text-primary mb-0"><i class="fas fa-info-circle mr-1"></i> Do not delay the purchase, adding items to your cart does not mean booking them.</p>
                         </div>
                     </div>
+
 
 
 
@@ -192,4 +194,17 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 </body>
+<script th:inline="javascript">
+    function changeQuantity(button, delta) {
+        var form = button.closest('form');
+        var display = form.querySelector('.quantity-display');
+        var currentValue = parseInt(display.textContent);
+        var newValue = currentValue + delta;
+
+        if (newValue >= 1) {
+            display.textContent = newValue;
+            form.querySelector('input[name="newQuantity"]').value = newValue;
+        }
+    }
+</script>
 </html>

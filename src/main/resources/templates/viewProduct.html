@@ -39,7 +39,9 @@
                     <a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/login}" href="#">login</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/logout}" href="#">logout</a>
+                    <form th:action="@{/logout}" method="post">
+                        <input type="submit" value="Logout" />
+                    </form>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" th:href="@{/cart}" href="#">cart</a>
@@ -55,7 +57,7 @@
 <div class="container mt-5">
     <div class="row">
         <div class="col-sm-5 d-flex justify-content-center">
-            <img class="mt-5" height="300px" width="300px" src="" th:src="@{${'/productImages/' + product.imageName}}"
+            <img class="mt-5" height="300px" width="300px" src="" th:src="@{${'/images/' + product.imageName}}"
                  alt="">
         </div>
         <div class="col-sm-7 mt-5">
@@ -63,10 +65,14 @@
             <p th:text="${product.category.name}"></p>
             <h2>₹ <span th:text="${product.price}"></span></h2>
             <h5>Weight:
-                <spna th:text="${product.weight}"></spna> grams.
+                <spna th:text="${product.priceOpt}"></spna> grams.
             </h5>
             <p th:text="${product.description}"></p>
-            <a href="" th:href="@{/addToCart/{id}(id = ${product.id})}" class="btn btn-primary">Add to cart</a>
+            <form th:action="@{/addToCart/{id}(id = ${product.id})}" method="post">
+                <label for="quantity">Quantity:</label>
+                <input type="number" id="quantity" name="quantity" value="1" min="1" max="10">
+                <button type="submit" class="btn btn-primary">Add to cart</button>
+            </form>
         </div>
     </div>
 </div>

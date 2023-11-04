@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -27,7 +27,9 @@
                     <a class="nav-link" th:href="@{/admin}" href="#">admin-home</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" th:href="@{/logout}" href="#">logout</a>
+                    <form th:action="@{/logout}" method="post">
+                        <input type="submit" value="Logout" />
+                    </form>
                 </li>
 
             </ul>
@@ -55,7 +57,7 @@
             <th scope="row" th:text="${iStat.index + 1}">1</th>
             <td th:text="${product.name}">Larry</td>
             <td th:text="${product.category.name}">Larry</td>
-            <td><img src="" height="100px" width="100px"  th:src="@{${'/images/' + product.imageName}}"></td>
+            <td><img src="" height="100px" width="100px"  th:src="@{${'/images/' + product.imageName}}" alt="image"></td>
 
             <td><a href="" th:href="@{/admin/product/delete/{id}(id=${product.id})}" class="btn btn-danger">Delete</a></td>
             <td><a href="" th:href="@{/admin/product/update/{id}(id=${product.id})}" class="btn btn-warning">Update</a></td>

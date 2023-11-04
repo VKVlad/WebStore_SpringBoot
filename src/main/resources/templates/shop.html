@@ -37,7 +37,9 @@
                     <a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/login}" href="#">login</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/logout}" href="#">logout</a>
+                    <form th:action="@{/logout}" method="post">
+                        <input type="submit" value="Logout" />
+                    </form>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" th:href="@{/cart}" href="#">cart</a>
@@ -66,13 +68,13 @@
             <div class="card" style="margin-top: 20px" th:each="product : ${products}">
                 <div class="row no-gutters">
                     <div class="col-sm-5 d-flex justify-content-center">
-                        <img class="" height="150px" width="150px" th:src="@{${'/productImages/' + product.imageName}}" th:alt="${product.name}">
+                        <img class="" height="150px" width="150px" th:src="@{${'/images/' + product.imageName}}" th:alt="${product.name}">
                     </div>
                     <div class="col-sm-7 d-flex justify-content-center">
                         <div class="card-body">
                             <h5 class="card-title" th:text="${product.name}"></h5>
-                            <h4>₹ <span th:text="${product.price}"></span></h4>
-                            <p th:text="${product.description}" >Suresh Dasari is a founder and technical lead developer in tutlane.</p>
+                            <h4>USD <span th:text="${product.price}"></span></h4>
+                            <p th:text="${product.description}"></p>
                             <a href="#" th:href="@{/shop/viewproduct/{id}(id=${product.id})}" class="btn btn-primary">View Product</a>
                         </div>
                     </div>
