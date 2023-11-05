@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Confirmation Page</title>
+</head>
+<body>
+<h1>Confirmation Page</h1>
+<p>Please enter your confirmation code:</p>
+<form th:action="@{/confirm-registration}" method="post">
+  <input type="text" name="confirmationCode" placeholder="Confirmation Code" required>
+  <input type="hidden" name="email" th:value="${email}">
+  <button type="submit">Confirm</button>
+</form>
+</body>
+</html>

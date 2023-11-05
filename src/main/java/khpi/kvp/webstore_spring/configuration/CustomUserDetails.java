@@ -52,4 +52,8 @@ public class CustomUserDetails extends User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    public boolean isValid() {
+        return super.isConfirmed();
+    }
 }

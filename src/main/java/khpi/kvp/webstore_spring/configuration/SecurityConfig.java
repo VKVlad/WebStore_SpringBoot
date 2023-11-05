@@ -1,5 +1,6 @@
 package khpi.kvp.webstore_spring.configuration;
 
+import khpi.kvp.webstore_spring.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -51,8 +53,16 @@ public class SecurityConfig {
                         .usernameParameter("email")
                         .passwordParameter("password")
                         .successHandler((request, response, authentication) -> {
-                            System.out.println("Logged user: " + authentication.getName());
-                            response.sendRedirect("/");
+                            if (authentication != null && authentication.isAuthenticated()) {
+                                CustomUserDetails user = (CustomUserDetails) authentication.getPrincipal();
+                                if (user.isValid()) {
+                                    System.out.println("Logged user: " + user.getUsername());
+                                    response.sendRedirect("/");
+                                } else {
+                                    response.sendRedirect("/confirmation-page/" + user.getUsername());
+                                }
+                            }
+
                         }))
                 .oauth2Login(ouath -> ouath
                         .loginPage("/login")

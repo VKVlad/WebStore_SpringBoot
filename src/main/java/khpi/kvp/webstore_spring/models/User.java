@@ -32,6 +32,10 @@ public class User {
     @NotEmpty
     private String password;
 
+    private String confirmationCode;
+
+    private boolean isConfirmed = false;
+
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",
                 joinColumns = {@JoinColumn(name = "USER_ID", referencedColumnName = "ID")},
@@ -44,6 +48,8 @@ public class User {
         this.email = user.getEmail();
         this.password = user.getPassword();
         this.roles = user.getRoles();
+        this.confirmationCode = user.getConfirmationCode();
+        this.isConfirmed = user.isConfirmed();
     }
     public User() { }
 
