@@ -4,10 +4,13 @@ import khpi.kvp.webstore_spring.models.Product;
 import khpi.kvp.webstore_spring.repositories.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductService{
@@ -24,5 +27,10 @@ public class ProductService{
 
     public List<Product> getProductsByCategoryId(Integer id) {
         return productRepository.findAllByCategory_id(id);
+    }
+
+    public Page<Product> findProductsByCriteria(Pageable pageable, Integer priceLow, Integer priceHigh,
+                                                List<String> categories, String search) {
+        return productRepository.findAll(ArticleSpecification.filterBy(priceLow, priceHigh, categories, search), pageable);
     }
 }
