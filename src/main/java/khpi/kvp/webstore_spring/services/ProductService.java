@@ -1,5 +1,10 @@
 package khpi.kvp.webstore_spring.services;
 
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
+import khpi.kvp.webstore_spring.dto.ProductFiltersDTO;
 import khpi.kvp.webstore_spring.models.Product;
 import khpi.kvp.webstore_spring.repositories.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -28,9 +33,23 @@ public class ProductService{
     public List<Product> getProductsByCategoryId(Integer id) {
         return productRepository.findAllByCategory_id(id);
     }
+    public List<Product> filterProducts(ProductFiltersDTO filters) {
+        return productRepository.findAll((Root<Product> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) -> {
+            Predicate predicate = criteriaBuilder.conjunction();
 
-    public Page<Product> findProductsByCriteria(Pageable pageable, Integer priceLow, Integer priceHigh,
-                                                List<String> categories, String search) {
-        return productRepository.findAll(ArticleSpecification.filterBy(priceLow, priceHigh, categories, search), pageable);
+            if (filters.getMinPrice() > 0) {
+                predicate = criteriaBuilder.and(predicate, criteriaBuilder.greaterThanOrEqualTo(root.get("price"), filters.getMinPrice()));
+            }
+
+            if (filters.getMaxPrice() > 0) {
+                predicate = criteriaBuilder.and(predicate, criteriaBuilder.lessThanOrEqualTo(root.get("price"), filters.getMaxPrice()));
+            }
+
+            if (filters.getCategoryId() != 0) {
+                predicate = criteriaBuilder.and(predicate, criteriaBuilder.equal(root.get("category").get("id"), filters.getCategoryId()));
+            }
+
+            return query.where(predicate).getRestriction();
+        });
     }
 }
