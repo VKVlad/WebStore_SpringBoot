@@ -27,7 +27,9 @@ public class HomeController {
     ProductService productService;
 
     @GetMapping({"/", "/home"})
-    public String home(Model model) {
+    public String home(Model model, HttpSession session) {
+        model.addAttribute("categories", categoryService.getAll());
+        model.addAttribute("cartCount", cartService.getCartSize(session));
         return "index";
     }
     @GetMapping("/shop")
@@ -46,6 +48,11 @@ public class HomeController {
     }
     @GetMapping("/shop/category/{id}")
     public String shopCategory(@PathVariable Integer id, Model model, HttpSession session) {
+        ProductFiltersDTO productFiltersDTO = new ProductFiltersDTO();
+        productFiltersDTO.setCategoryId(id);
+        productFiltersDTO.setMaxPrice(0.0);
+        productFiltersDTO.setMinPrice(0.0);
+        model.addAttribute("filters", productFiltersDTO);
         model.addAttribute("categories", categoryService.getAll());
         model.addAttribute("cartCount",  cartService.getCartSize(session));
         model.addAttribute("products", productService.getProductsByCategoryId(id));

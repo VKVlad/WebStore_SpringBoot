@@ -47,9 +47,9 @@
             </div>
             <ul class="sub-menu">
                 <li><a class="link_name" href="#">Category</a></li>
-                <li><a href="#">HTML & CSS</a></li>
-                <li><a href="#">JavaScript</a></li>
-                <li><a href="#">PHP & MySQL</a></li>
+                <li th:each="category : ${categories}">
+                    <a th:text="${category.name}" href="#" th:href="@{'/shop/category/' + ${category.id}}"></a>
+                </li>
             </ul>
         </li>
         <li>
@@ -64,7 +64,7 @@
         <li>
             <a href="#" th:href="@{/cart}">
                 <i class='bx bx-cart-alt'></i>
-                <span class="link_name">Cart <span class="cart-count" th:text="${cartItemCount}"></span></span>
+                <span class="link_name">Cart <span class="cart-count" th:text="${cartCount}"></span></span>
             </a>
             <ul class="sub-menu blank">
                 <li><a class="link_name" th:href="@{/cart}" href="#">Cart</a></li>

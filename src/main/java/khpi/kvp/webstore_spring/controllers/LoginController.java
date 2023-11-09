@@ -12,6 +12,7 @@ import khpi.kvp.webstore_spring.repositories.ProductRepository;
 import khpi.kvp.webstore_spring.repositories.RoleRepository;
 import khpi.kvp.webstore_spring.repositories.UserRepository;
 import khpi.kvp.webstore_spring.services.CartService;
+import khpi.kvp.webstore_spring.services.CategoryService;
 import khpi.kvp.webstore_spring.services.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -41,6 +42,8 @@ public class LoginController {
     ProductRepository productRepository;
     @Autowired
     RoleRepository roleRepository;
+    @Autowired
+    CategoryService categoryService;
 
     @GetMapping("/login")
     public String login(HttpSession session, Model model) {
@@ -48,6 +51,7 @@ public class LoginController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
             cartService.clear(session);
+            model.addAttribute("categories", categoryService.getAll());
             return "login";
         }
 

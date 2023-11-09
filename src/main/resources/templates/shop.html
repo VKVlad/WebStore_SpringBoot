@@ -7,7 +7,533 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="css/home.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+        body {
+            margin-left: 60px;
+            margin-top: 50px;
+            background-color: #c5cdfd;
+            background: linear-gradient(to right, #e2e2e2, #c5cdfd);
+        }
+
+        .container {
+            display: flex;
+            flex-direction: row; /* Display cards in a row */
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 60px;
+        }
+
+        .card {
+            position: relative;
+            width: 320px;
+            height: 450px;
+            background-color: #01616f;
+            background: linear-gradient(to right, #009292, #016675);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 0; /* Отступ сверху и снизу кнопки */
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #00c4ad;
+            clip-path: circle(150px at 80% 20%);
+            transition: 0.5s ease-out;
+        }
+        .card:hover::before {
+            clip-path: circle(300px at 80% -20%);
+        }
+        .card::after {
+            content: 'ITech';
+            position: absolute;
+            top: 30%;
+            left: -10%;
+            font-size: 8em;
+            font-weight: 800;
+            font-style: italic;
+            color: rgb(1, 100, 115);
+        }
+        .card .imgBx {
+            position: absolute;
+            top: 35%;
+            transform: translateY(-50%);
+            z-index: 90;
+            width: 105%;
+            height: 230px;
+            transition: 0.5s;
+        }
+        .card:hover .imgBx {
+            top: 0;
+            transform: translateY(0) scale(0.8);
+        }
+        .card img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-53%, -50%);
+            width: 270px;
+        }
+        .card .contentBx {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 100px;
+            transition: 1s;
+            z-index: 10;
+        }
+        .card:hover .contentBx {
+            height: 210px;
+        }
+        .card .contentBx h2 {
+            position: relative;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: #ffffff;
+        }
+        .card .contentBx .size,
+        .card .contentBx .color {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 8px 20px;
+            transition: 0.5s;
+            opacity: 0;
+            visibility: hidden;
+        }
+        .card:hover .contentBx .size {
+            opacity: 1;
+            visibility: visible;
+            transition-delay: 0.5s;
+        }
+        .card:hover .contentBx .color {
+            opacity: 1;
+            visibility: visible;
+            transition-delay: 0.6s;
+        }
+        .card .contentBx .size h3,
+        .card .contentBx .color h3 {
+            color: #ffffff;
+            font-weight: 300;
+            font-size: 17px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-right: 10px;
+        }
+
+        .card .contentBx .size h4,
+        .card .contentBx .color h4 {
+            color: #dadada;
+            font-weight: 300;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-right: 10px;
+        }
+
+        .card .contentBx .prod_name {
+            display: flex;
+            align-items: center;
+            margin-left: 20px;
+        }
+
+        .card .contentBx .price {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end; /* Move the price to the right */
+            margin-top: 10px; /* Add some top margin for spacing */
+            margin-right: 20px;
+        }
+
+        .card .contentBx .price h4 {
+            font-weight: 600;
+            font-size: 17px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #a0d1fd;
+            margin-right: 5px;
+        }
+
+        .card .contentBx .price h3 {
+            font-weight: 600;
+            font-size: 24px;
+            color: #a0d1fd;
+            margin: 0;
+        }
+
+        .card .contentBx .size h4,
+        .card .contentBx .color h4 {
+            color: #dadada;
+            font-weight: 300;
+            font-size: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-right: 10px;
+        }
+
+        .card .contentBx .size span {
+            width: 26px;
+            height: 26px;
+            text-align: center;
+            line-height: 26px;
+            font-size: 20px;
+            display: inline-block;
+            color: #c0f6eb;
+            background: #fff;
+            margin: 0 5px;
+            transition: 0.5s;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .card .contentBx .size span:hover {
+            background: #86D8CF;
+        }
+        .card .contentBx .color span {
+            width: 20px;
+            height: 20px;
+            background: #ff0;
+            border-radius: 50%;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+        .card .contentBx .color span:nth-child(2) {
+            background: #00d3ee;
+        }
+        .card .contentBx .color span:nth-child(3) {
+            background: #03a9f4;
+        }
+        .card .contentBx .color span:nth-child(4) {
+            background: #e91e63;
+        }
+        .card .contentBx a {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #fff;
+            border-radius: 4px;
+            margin-top: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            color: #86D8CF;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: 0.5s;
+        }
+        .card:hover .contentBx a {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.75s;
+        }
+
+
+
+        label {
+            font-weight: bold;
+            color: #ffffff; /* Make the label white */
+            font-size: 1.2em; /* Increase label font size */
+            margin-bottom: 5px;
+        }
+
+        /* Общий контейнер для фильтров */
+        .filters {
+            float: right;
+            background-color: #258ad5;
+            background: linear-gradient(to left, #258ad5, #0f6bab);
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px; /* Регулируйте ширину по своему усмотрению */
+            height: 450px;
+            margin-right: 40px;
+        }
+
+        /* Заголовок "Filters" */
+        .filters h2 {
+            font-size: 18px;
+            margin-top: 0;
+            color: #fdfdfd;
+        }
+
+        /* Стили для инпутов и лейблов */
+        .filters label {
+            display: block;
+            font-size: 14px;
+            color: #ffffff;
+            margin-top: 10px;
+        }
+
+        .filters input[type="number"],
+        .filters select {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #062a6f;
+            border-radius: 3px;
+            font-size: 14px;
+            background-color: #a0d1fd;
+        }
+
+
+        /* Стили для кнопок */
+        .filters input[type="submit"] {
+            background-color: #062a6f; /* Цвет фона кнопки */
+            color: #fff; /* Цвет текста кнопки */
+            padding: 10px 15px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        .button-container {
+            margin-top: 10px;
+        }
+
+        .button-container form button {
+            background-color: #ff5733; /* Измените цвет фона на желаемый */
+            color: #fff; /* Измените цвет текста на белый или другой по вашему выбору */
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px; /* Измените размер шрифта на желаемый */
+            transition: background-color 0.3s;
+        }
+
+        .button-container form button:hover {
+            background-color: #e64827; /* Измените цвет фона при наведении на кнопку */
+        }
+
+        .reset-button {
+            background-color: #c54327; /* Цвет фона кнопки Reset */
+            color: #fff; /* Цвет текста кнопки Reset */
+            padding: 10px 15px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 20px;
+        }
+
+        /* Стили для поисковой кнопки */
+        .search-bar button {
+            background-color: #062a6f; /* Цвет фона кнопки поиска */
+            color: #fff; /* Цвет текста кнопки поиска */
+            padding: 10px 15px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        /* Отступы и выравнивание текстовых полей */
+        .search-bar input[type="text"] {
+            padding: 8px;
+            margin-right: 10px;
+            width: 75%; /* Регулируйте ширину по своему усмотрению */
+        }
+
+        /* Выравнивание элементов в поисковой строке */
+        .search-bar {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .sidebar{
+            font-family: 'Montserrat', sans-serif;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 260px;
+            background-color: #017485;
+            background: linear-gradient(to right, #009292, #017b8d);
+            z-index: 100;
+            transition: all 0.5s ease;
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.2);
+        }
+        .sidebar.close{
+            width: 78px;
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.2);
+        }
+        .sidebar .logo-details{
+            height: 50px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+        }
+        .sidebar .logo-details i{
+            font-size: 60px;
+            color: #fff;
+            height: 50px;
+            min-width: 78px;
+            text-align: center;
+            line-height: 50px;
+        }
+        .sidebar .logo-details .logo_name{
+            font-size: 35px;
+            color: #fff;
+            font-weight: 600;
+            transition: 0.3s ease;
+            transition-delay: 0.1s;
+        }
+        .sidebar.close .logo-details .logo_name{
+            transition-delay: 0s;
+            opacity: 0;
+            pointer-events: none;
+        }
+        .sidebar .nav-links{
+            height: 100%;
+            padding: 50px 0 150px 0;
+            overflow: auto;
+        }
+        .sidebar.close .nav-links{
+            overflow: visible;
+        }
+        .sidebar .nav-links::-webkit-scrollbar{
+            display: none;
+        }
+        .sidebar .nav-links li{
+            position: relative;
+            list-style: none;
+            transition: all 0.4s ease;
+        }
+        .sidebar .nav-links li:hover{
+            background: #016170;
+        }
+        .sidebar .nav-links li .iocn-link{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .sidebar.close .nav-links li .iocn-link{
+            display: block
+        }
+        .sidebar .nav-links li i{
+            height: 50px;
+            min-width: 78px;
+            text-align: center;
+            line-height: 50px;
+            color: #fff;
+            font-size: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .sidebar .nav-links li.showMenu i.arrow{
+            transform: rotate(-180deg);
+        }
+        .sidebar.close .nav-links i.arrow{
+            display: none;
+        }
+        .sidebar .nav-links li a{
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        .sidebar .nav-links li a .link_name{
+            font-size: 18px;
+            font-weight: 400;
+            color: #fff;
+            transition: all 0.4s ease;
+        }
+        .sidebar.close .nav-links li a .link_name{
+            opacity: 0;
+            pointer-events: none;
+        }
+        .sidebar .nav-links li .sub-menu{
+            padding: 6px 6px 14px 80px;
+            margin-top: -10px;
+            background: #016170;
+            display: none;
+        }
+        .sidebar .nav-links li.showMenu .sub-menu{
+            display: block;
+        }
+        .sidebar .nav-links li .sub-menu a{
+            color: #fff;
+            font-size: 15px;
+            padding: 5px 0;
+            white-space: nowrap;
+            opacity: 0.6;
+            transition: all 0.3s ease;
+        }
+        .sidebar .nav-links li .sub-menu a:hover{
+            opacity: 1;
+        }
+        .sidebar.close .nav-links li .sub-menu{
+            position: absolute;
+            left: 100%;
+            top: -10px;
+            margin-top: 0;
+            padding: 10px 20px;
+            border-radius: 0 6px 6px 0;
+            opacity: 0;
+            display: block;
+            pointer-events: none;
+            transition: 0s;
+        }
+        .sidebar.close .nav-links li:hover .sub-menu{
+            top: 0;
+            opacity: 1;
+            pointer-events: auto;
+            transition: all 0.4s ease;
+        }
+        .sidebar .nav-links li .sub-menu .link_name{
+            display: none;
+        }
+        .sidebar.close .nav-links li .sub-menu .link_name{
+            font-size: 18px;
+            opacity: 1;
+            display: block;
+        }
+        .sidebar .nav-links li .sub-menu.blank{
+            opacity: 1;
+            pointer-events: auto;
+            padding: 3px 20px 6px 16px;
+            opacity: 0;
+            pointer-events: none;
+        }
+        .sidebar .nav-links li:hover .sub-menu.blank{
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        @media (max-width: 420px) {
+            .sidebar.close .nav-links li .sub-menu{
+                display: none;
+            }
+        }
+        .logout-link {
+            color: red;
+        }
+        .sidebar .nav-links li:not(:last-child) {
+            margin-bottom: 30px;
+        }
+        /* Стили для поиска */
+        .search-bar {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
     <title>Products</title>
 </head>
 <body>
@@ -47,9 +573,9 @@
             </div>
             <ul class="sub-menu">
                 <li><a class="link_name" href="#">Category</a></li>
-                <li><a href="#">HTML & CSS</a></li>
-                <li><a href="#">JavaScript</a></li>
-                <li><a href="#">PHP & MySQL</a></li>
+                <li th:each="category : ${categories}">
+                    <a th:text="${category.name}" href="#" th:href="@{'/shop/category/' + ${category.id}}"></a>
+                </li>
             </ul>
         </li>
         <li>
@@ -64,7 +590,7 @@
         <li>
             <a href="#" th:href="@{/cart}">
                 <i class='bx bx-cart-alt'></i>
-                <span class="link_name">Cart <span class="cart-count" th:text="${cartItemCount}"></span></span>
+                <span class="link_name">Cart <span class="cart-count" th:text="${cartCount}"></span></span>
             </a>
             <ul class="sub-menu blank">
                 <li><a class="link_name" th:href="@{/cart}" href="#">Cart</a></li>
@@ -81,12 +607,13 @@
         </li>
     </ul>
 </div>
-<div class="search-bar">
-    <input type="text" id="searchInput" placeholder="Search by name..." />
-    <button onclick="searchProducts()">Search</button>
-</div>
-<section class="filters">
+
+<div class="filters">
     <h2>Filters</h2>
+    <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search by name..." />
+        <button onclick="searchProducts()">Search</button>
+    </div>
     <form th:action="@{/shop/filter}" th:object="${filters}" method="get">
         <label for="minPrice">Min Price:</label>
         <input type="number" id="minPrice" th:field="*{minPrice}" />
@@ -102,30 +629,35 @@
         <input type="submit" value="Apply Filters" />
     </form>
     <form th:action="@{/shop}" method="get">
-        <input type="submit" value="Reset" class="reset-button"/>
+        <button type="submit" class="reset-button">Reset</button>
     </form>
-</section>
-
-    <div class="container">
-        <div class="card" th:each="product : ${products}">
-            <div class="imgBx">
-                <img class="product-image" th:src="@{${'/images/' + product.imageName}}" th:alt="${product.name}" />
-            </div>
-            <div class="contentBx">
+</div>
+<div class="container">
+    <div class="card" th:each="product : ${products}">
+        <div class="imgBx">
+            <img class="product-image" th:src="@{${'/images/' + product.imageName}}" th:alt="${product.name}" />
+        </div>
+        <div class="contentBx">
+            <div class="prod_name">
                 <h2 th:text="${product.name}" id="product-name"></h2>
-                <div class="size">
-                    <h3>Price:</h3><h3 th:text="${product.price}"></h3>
-                    <h4>Price Opt:</h4> <h4 th:text="${product.priceOpt}"></h4>
-                    <div class="button-container">
-                        <button>
-
-                        </button>
-                    </div>
-                </div>
+            </div>
+            <div class="price">
+                <h4>$</h4>
+                <h3 th:text="${product.price}"></h3>
+            </div>
+            <div class="size">
+                <h4>Price Opt:</h4>
+                <h4 th:text="${product.priceOpt}"></h4>
+            </div>
+            <div class="button-container">
+                <form th:action="@{'/shop/viewproduct/' + ${product.id}}" method="get">
+                    <button type="submit">View Product</button>
+                </form>
             </div>
         </div>
     </div>
 </div>
+
 
 <script>
     let arrow = document.querySelectorAll(".arrow");
