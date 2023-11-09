@@ -16,6 +16,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.Random;
+
+import static java.lang.Math.random;
 
 @Controller
 public class HomeController {
@@ -38,6 +42,10 @@ public class HomeController {
         model.addAttribute("categories", categoryService.getAll());
         model.addAttribute("products", productService.getAll());
         model.addAttribute("cartCount", cartService.getCartSize(session));
+        Random random = new Random();
+        Long productId = random.nextLong(productService.findMinProductId(), productService.findMaxProductId());
+        Product productDay = productService.getProductById(productId).get();
+        model.addAttribute("productDay", productDay);
         return "shop";
     }
     @GetMapping("/shop/viewproduct/{id}")
@@ -52,6 +60,10 @@ public class HomeController {
         productFiltersDTO.setCategoryId(id);
         productFiltersDTO.setMaxPrice(0.0);
         productFiltersDTO.setMinPrice(0.0);
+        Random random = new Random();
+        Long productId = random.nextLong(productService.findMinProductId(), productService.findMaxProductId());
+        Product productDay = productService.getProductById(productId).get();
+        model.addAttribute("productDay", productDay);
         model.addAttribute("filters", productFiltersDTO);
         model.addAttribute("categories", categoryService.getAll());
         model.addAttribute("cartCount",  cartService.getCartSize(session));
@@ -60,8 +72,13 @@ public class HomeController {
     }
 
     @GetMapping("/shop/filter")
-    public String filterProducts(@ModelAttribute("filters") ProductFiltersDTO filters, Model model) {
+    public String filterProducts(@ModelAttribute("filters") ProductFiltersDTO filters, Model model, HttpSession session) {
+        Random random = new Random();
+        Long productId = random.nextLong(productService.findMinProductId(), productService.findMaxProductId());
+        Product productDay = productService.getProductById(productId).get();
+        model.addAttribute("productDay", productDay);
         model.addAttribute("categories", categoryService.getAll());
+        model.addAttribute("cartCount",  cartService.getCartSize(session));
         model.addAttribute("products", productService.filterProducts(filters));
         return "shop";
     }

@@ -52,4 +52,10 @@ public class ProductService{
             return query.where(predicate).getRestriction();
         });
     }
+    public Long findMaxProductId() {
+        return productRepository.findMaxProductId();
+    }
+    public Long findMinProductId() {
+        return productRepository.findMinProductId();
+    }
 }
