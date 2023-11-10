@@ -2,7 +2,6 @@ package khpi.kvp.webstore_spring.controllers;
 
 import jakarta.servlet.http.HttpSession;
 import khpi.kvp.webstore_spring.dto.OrderDTO;
-import khpi.kvp.webstore_spring.dto.ProductDTO;
 import khpi.kvp.webstore_spring.models.Order;
 import khpi.kvp.webstore_spring.models.OrderItem;
 import khpi.kvp.webstore_spring.models.Product;

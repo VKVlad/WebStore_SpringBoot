@@ -49,7 +49,9 @@ public class HomeController {
         return "shop";
     }
     @GetMapping("/shop/viewproduct/{id}")
-    public String viewProduct(@PathVariable Long id, Model model) {
+    public String viewProduct(@PathVariable Long id, Model model, HttpSession session) {
+        model.addAttribute("categories", categoryService.getAll());
+        model.addAttribute("cartCount",  cartService.getCartSize(session));
         Product product = productService.getProductById(id).get();
         model.addAttribute("product", product);
         return "viewProduct";

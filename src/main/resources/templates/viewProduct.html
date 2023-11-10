@@ -3,89 +3,155 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
-          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <title>Product Card UI Design</title>
+    <link rel="stylesheet" type="text/css" href="/css/productView.css">
+    <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <title>Document</title>
 </head>
 <body>
 
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-            <img th:src="@{/images/logo.png}" src="../static/images/logo.png" width="auto" height="40"
-                 class="d-inline-block align-top" alt=""/>
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto"></ul>
-            <ul class="navbar-nav">
-                <li class="nav-item active">
-                    <a class="nav-link" th:href="@{/}" href="#">home</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" th:href="@{/shop}" href="#">shop</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/login}" href="#">login</a>
-                </li>
-                <li class="nav-item active">
-                    <form th:action="@{/logout}" method="post">
-                        <input type="submit" value="Logout" />
-                    </form>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" th:href="@{/cart}" href="#">cart</a>
-                </li>
-                <li class="nav-item active">
-                    <span class="nav-link" th:text="${cartCount}"></span>
+<div class="sidebar close">
+    <div class="logo-details">
+        <i class='bx bxl-java' ></i>
+        <span class="logo_name">ITech</span>
+    </div>
+    <ul class="nav-links">
+        <li>
+            <a href="#">
+                <i class='bx bx-menu'></i>
+                <span class="link_name">Menu</span>
+            </a>
+            <ul class="sub-menu blank">
+                <li><a class="link_name" href="#">Menu</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#" th:href="@{/}">
+                <i class='bx bx-grid-alt' ></i>
+                <span class="link_name">Home</span>
+            </a>
+            <ul class="sub-menu blank">
+                <li><a class="link_name" th:href="@{/}">Home</a></li>
+            </ul>
+        </li>
+        <li>
+            <div class="iocn-link">
+                <a href="#">
+                    <i class='bx bx-collection' ></i>
+                    <span class="link_name">Category</span>
+                </a>
+                <i class='bx bxs-chevron-down arrow' ></i>
+            </div>
+            <ul class="sub-menu">
+                <li><a class="link_name" href="#">Category</a></li>
+                <li th:each="category : ${categories}">
+                    <a th:text="${category.name}" href="#" th:href="@{'/shop/category/' + ${category.id}}"></a>
                 </li>
             </ul>
-
-        </div>
+        </li>
+        <li>
+            <a href="#" th:href="@{/shop}">
+                <i class='bx bx-laptop' ></i>
+                <span class="link_name">Products</span>
+            </a>
+            <ul class="sub-menu blank">
+                <li><a class="link_name" th:href="@{/shop}" href="#" >Products</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#" th:href="@{/cart}">
+                <i class='bx bx-cart-alt'></i>
+                <span class="link_name">Cart <span class="cart-count" th:text="${cartCount}"></span></span>
+            </a>
+            <ul class="sub-menu blank">
+                <li><a class="link_name" th:href="@{/cart}" href="#">Cart</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#" th:href="@{/logout}" th:action="@{/logout}" th:method="post">
+                <i class='bx bx-log-out' style="color: rgb(255, 0, 0);"></i>
+                <span class="link_name logout-link" style="color: rgb(255, 0, 0);">LogIn/Out</span>
+            </a>
+            <ul class="sub-menu blank">
+                <li><a class="link_name" href="#" th:href="@{/logout}" th:action="@{/logout}" th:method="post">LogIn/Out</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+<div class="container">
+    <div class="imgBx">
+        <img th:src="@{${'/images/' + product.imageName}}">
     </div>
-</nav>
-<div class="container mt-5">
-    <div class="row">
-        <div class="col-sm-5 d-flex justify-content-center">
-            <img class="mt-5" height="300px" width="300px" src="" th:src="@{${'/images/' + product.imageName}}"
-                 alt="">
-        </div>
-        <div class="col-sm-7 mt-5">
-            <h2 th:text="${product.name}"></h2>
-            <p th:text="${product.category.name}"></p>
-            <h2>₹ <span th:text="${product.price}"></span></h2>
-            <h5>Weight:
-                <spna th:text="${product.priceOpt}"></spna> grams.
-            </h5>
-            <p th:text="${product.description}"></p>
-            <form th:action="@{/addToCart/{id}(id = ${product.id})}" method="post">
-                <label for="quantity">Quantity:</label>
-                <input type="number" id="quantity" name="quantity" value="1" min="1" max="10">
-                <button type="submit" class="btn btn-primary">Add to cart</button>
-            </form>
-        </div>
+    <div class="details">
+            <div class="content">
+                <h2 th:text="${product.name}"></h2>
+                <span th:text="${product.category.name}"></span>
+                <p th:text="${product.description}"></p>
+            </div>
+            <div class="price_quantity">
+                <div class="price-section">
+                    <h2>$</h2>
+                    <h2 th:text="${product.price}"></h2>
+                </div>
+                <div class="tvari">
+                    <form th:action="@{/addToCart/{id}(id = ${product.id})}" method="post">
+                        <div class="block_quantity">
+                            <span>Quantity</span>
+                            <div class="block_quantity__chooseBlock">
+                                <button type="button" class="block_quantity__button block_quantity__down"><i class='bx bx-minus' ></i></button>
+                                <input class="block_quantity__number" name="quantity" type="text" min="1" value="1">
+                                <button type="button" class="block_quantity__button block_quantity__up"><i class='bx bx-plus'></i></button>
+                            </div>
+                        </div>
+                        <div class="add-to-cart-section">
+                            <button type="submit">Add to cart</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
     </div>
 </div>
 
+<script>
+    let arrow = document.querySelectorAll(".arrow");
+    for (var i = 0; i < arrow.length; i++) {
+        arrow[i].addEventListener("click", (e)=>{
+            let arrowParent = e.target.parentElement.parentElement;//selecting main parent of arrow
+            arrowParent.classList.toggle("showMenu");
+        });
+    }
+    let sidebar = document.querySelector(".sidebar");
+    let sidebarBtn = document.querySelector(".bx-menu");
+    console.log(sidebarBtn);
+    sidebarBtn.addEventListener("click", ()=>{
+        sidebar.classList.toggle("close");
+    });
 
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-        crossorigin="anonymous"></script>
+    var up = document.getElementsByClassName('block_quantity__up')[0],
+        down = document.getElementsByClassName('block_quantity__down')[0],
+        input = document.getElementsByClassName('block_quantity__number')[0];
+
+    function getValue() {
+        return parseInt(input.value);
+    }
+
+    up.onclick = function (event) {
+        input.value = getValue() + 1;
+    };
+    down.onclick = function (event) {
+        if (input.value <= 1) {
+            return 1;
+        } else {
+            input.value = getValue() - 1;
+        }
+
+    }
+
+</script>
 </body>
 </html>

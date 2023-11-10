@@ -11,6 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.query.QueryUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,6 +36,15 @@ public class ProductService{
         return productRepository.findAllByCategory_id(id);
     }
     public List<Product> filterProducts(ProductFiltersDTO filters) {
+        Sort sort; // Default sorting is unsorted
+
+        if ("asc".equalsIgnoreCase(filters.getSortOrder())) {
+            sort = Sort.by(Sort.Order.asc("price"));
+        } else if ("desc".equalsIgnoreCase(filters.getSortOrder())) {
+            sort = Sort.by(Sort.Order.desc("price"));
+        } else {
+            sort = Sort.unsorted();
+        }
         return productRepository.findAll((Root<Product> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) -> {
             Predicate predicate = criteriaBuilder.conjunction();
 
@@ -49,7 +60,13 @@ public class ProductService{
                 predicate = criteriaBuilder.and(predicate, criteriaBuilder.equal(root.get("category").get("id"), filters.getCategoryId()));
             }
 
-            return query.where(predicate).getRestriction();
+            query.where(predicate);
+
+            if (sort.isSorted()) {
+                query.orderBy(QueryUtils.toOrders(sort, root, criteriaBuilder));
+            }
+
+            return query.getRestriction();
         });
     }
     public Long findMaxProductId() {

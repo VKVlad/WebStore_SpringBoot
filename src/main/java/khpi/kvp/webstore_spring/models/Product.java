@@ -23,7 +23,9 @@ public class Product {
     private Category category;
     private double price;
     private double priceOpt;
+
     private String description;
+
     private String imageName;
     @Column(name = "article", unique = true)
     private String article;

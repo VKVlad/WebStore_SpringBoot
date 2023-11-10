@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,8 +33,9 @@ public class Order {
     private String city;
     private String phone;
 
-    public String email;
+    private String email;
 
-    public String description;
+    private String description;
 
+    private LocalDateTime dateTime;
 }

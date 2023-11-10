@@ -7,4 +7,5 @@ public class ProductFiltersDTO {
     private int categoryId;
     private double minPrice;
     private double maxPrice;
+    private String sortOrder;
 }

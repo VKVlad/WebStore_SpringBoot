@@ -1,0 +1,225 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,800&display=swap');
+
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: 'Poppins', sans-serif;
+    background-color: #c5cdfd;
+    background: linear-gradient(to right, #e2e2e2, #c5cdfd);
+}
+
+.container {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    flex-direction: column;
+    width: 900px;
+    height: 600px;
+    background: #fff;
+    margin: 20px;
+    border-radius: 40px;
+    align-items: flex-start;
+    box-sizing: border-box;
+}
+
+.container .imgBx {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 100%;
+    background-color: #01616f;
+    background: linear-gradient(to right, #009292, #016675);
+    transition: .3s linear;
+}
+
+.container .imgBx:before {
+    content: 'ITech';
+    position: absolute;
+    top: 0px;
+    left: 24px;
+    color: #014049;
+    opacity: 0.2;
+    font-size: 8em;
+    font-weight: 800;
+}
+
+.container .imgBx img {
+    position: relative;
+    width: 500px;
+    transition: .9s linear;
+    margin-top: 100px;
+}
+
+
+.container .details .content h2{
+    margin: 0;
+    padding: 0;
+    font-size: 2.4em;
+    line-height: 1em;
+    color: #444;
+}
+
+.container .details .content span {
+    font-size: 1.2em;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #999;
+}
+
+.container .details .content p {
+    max-width: 85%;
+    margin-left: 15%;
+    color: #333;
+    font-size: 15px;
+    margin-bottom: 36px;
+}
+
+.container .details .price_quantity .add-to-cart-section button {
+    background: #212121;
+    color: #fff;
+    border: none;
+    outline: none;
+    padding: 15px 20px;
+    margin-top: 20px;
+    font-size: 16px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 600;
+    border-radius: 40px;
+    cursor:pointer;
+}
+
+.container .details .price_quantity .add-to-cart-section button:hover {
+    background: #000;
+}
+
+.container .details .price_quantity .block_quantity button {
+    background: #000;
+    color: #fff;
+    border: none;
+    outline: none;
+    padding: 5px 7px;
+    margin-top: 10px;
+    font-size: 16px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 600;
+    border-radius: 40px;
+    float: inherit;
+    cursor:pointer;
+}
+
+.container .details .price_quantity .add-to-cart-section {
+    width: 40%;
+}
+
+.container .details .price_quantity .block_quantity {
+    width: 30%;
+}
+.container .details .price_quantity .block_quantity .block_quantity__chooseBlock input{
+    width: 25px;
+}
+
+.tvari form {
+    display: flex;
+}
+
+.tvari .block_quantity,
+.tvari .add-to-cart-section {
+    width: 50%; /* Adjust width as needed */
+    box-sizing: border-box; /* Include padding and border in the total width */
+}
+
+.tvari .block_quantity {
+    margin-left: 45px; /* Adjust as needed for spacing between the two blocks */
+}
+
+.tvari .add-to-cart-section {
+    margin-left: 60px; /* Adjust as needed for spacing between the two blocks */
+}
+
+.block_quantity,
+.add-to-cart-section {
+    margin-right: 10px; /* Adjust as needed for spacing between the two blocks */
+}
+
+.container .details .price_quantity {
+    flex: 1; /* Take remaining space */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Align content at the top */
+    padding: 20px;
+}
+
+.container .details .price_quantity .price-section {
+    display: flex;
+    flex-direction: row;
+    float: right;
+    margin: auto;
+}
+
+.container .details .content {
+    flex: 1; /* Take remaining space */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Align content at the top */
+    padding: 20px;
+}
+
+.container .details {
+    display: flex;
+    width: 50%;
+    height: 100%;
+    flex-direction: column;
+}
+
+.container .details .price_quantity h2 {
+    margin: 0 5px 0 0; /* Add some spacing between USD and price */
+    font-size: 2.5em; /* Adjust the font size if needed */
+}
+.container .details .price_quantity h3 {
+    margin: 0; /* Reset margin */
+}
+
+.container .details .price_quantity span {
+    font-size: 1.2em;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #999;
+}
+
+/* responsive */
+@media (max-width: 1080px) {
+    .container {
+        height: auto;
+    }
+    .container .imgBx {
+        padding: 40px;
+        box-sizing: border-box;
+        width: 100% !important;
+        height: auto;
+        text-align: center;
+        overflow: hidden;
+    }
+    .container .imgBx img {
+        left: initial;
+        max-width: 100%;
+        transform: rotate(0deg);
+    }
+    .details {
+        width: 100% !important;
+        height: auto;
+        padding: 20px;
+    }
+    .container .details p {
+        margin-left: 0;
+        max-width: 100%;
+    }
+}
