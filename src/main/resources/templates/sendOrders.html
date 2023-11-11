@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" type="text/css" href="/css/categoryAdd.css">
+  <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <title>Document</title>
+</head>
+<body>
+<div class="sidebar close">
+  <div class="logo-details">
+    <i class='bx bxl-java' ></i>
+    <span class="logo_name">ITech</span>
+  </div>
+  <ul class="nav-links">
+    <li>
+      <a href="#">
+        <i class='bx bx-menu'></i>
+        <span class="link_name">Menu</span>
+      </a>
+      <ul class="sub-menu blank">
+        <li><a class="link_name" href="#">Menu</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#" th:href="@{/}">
+        <i class='bx bx-grid-alt' ></i>
+        <span class="link_name">Home</span>
+      </a>
+      <ul class="sub-menu blank">
+        <li><a class="link_name" th:href="@{/}">Home</a></li>
+      </ul>
+    </li>
+    <li>
+      <div class="iocn-link">
+        <a href="#">
+          <i class='bx bx-collection' ></i>
+          <span class="link_name">Category</span>
+        </a>
+        <i class='bx bxs-chevron-down arrow' ></i>
+      </div>
+      <ul class="sub-menu">
+        <li><a class="link_name" href="#">Category</a></li>
+        <li th:each="category : ${categories}">
+          <a th:text="${category.name}" href="#" th:href="@{'/shop/category/' + ${category.id}}"></a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="#" th:href="@{/shop}">
+        <i class='bx bx-laptop' ></i>
+        <span class="link_name">Products</span>
+      </a>
+      <ul class="sub-menu blank">
+        <li><a class="link_name" th:href="@{/shop}" href="#" >Products</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#" th:href="@{/cart}">
+        <i class='bx bx-cart-alt'></i>
+        <span class="link_name">Cart <span class="cart-count" th:text="${cartCount}"></span></span>
+      </a>
+      <ul class="sub-menu blank">
+        <li><a class="link_name" th:href="@{/cart}" href="#">Cart</a></li>
+      </ul>
+    </li>
+    <li>
+      <div class="iocn-link">
+        <a href="#" th:href="@{'/admin'}">
+          <i class='bx bx-cog'></i>
+          <span class="link_name">Settings</span>
+        </a>
+        <i class='bx bxs-chevron-down arrow' ></i>
+      </div>
+      <ul class="sub-menu">
+        <li><a class="link_name" href="#" th:href="@{'/admin'}">Settings</a></li>
+        <li><a href="#" th:href="@{'/admin/categories'}">Categories</a></li>
+        <li><a href="#" th:href="@{'/admin/products'}">Products</a></li>
+        <li><a href="#" th:href="@{'/admin/orders'}">Orders</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#" th:href="@{/logout}" th:action="@{/logout}" th:method="post">
+        <i class='bx bx-log-out' style="color: rgb(255, 0, 0);"></i>
+        <span class="link_name logout-link" style="color: rgb(255, 0, 0);">LogIn/Out</span>
+      </a>
+      <ul class="sub-menu blank">
+        <li><a class="link_name" href="#" th:href="@{/logout}" th:action="@{/logout}" th:method="post">LogIn/Out</a></li>
+      </ul>
+    </li>
+  </ul>
+</div>
+<div class="container">
+  <form th:action="@{/admin/orders/sendEmail}" th:method="post">
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+      <label for="date">Select Date:</label>
+      <input type="date" id="date" name="date" class="form-control" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+
+<script>
+  let arrow = document.querySelectorAll(".arrow");
+  for (var i = 0; i < arrow.length; i++) {
+    arrow[i].addEventListener("click", (e)=>{
+      let arrowParent = e.target.parentElement.parentElement;
+      arrowParent.classList.toggle("showMenu");
+    });
+  }
+  let sidebar = document.querySelector(".sidebar");
+  let sidebarBtn = document.querySelector(".bx-menu");
+  console.log(sidebarBtn);
+  sidebarBtn.addEventListener("click", ()=>{
+    sidebar.classList.toggle("close");
+  });
+</script>
+</body>
+</html>

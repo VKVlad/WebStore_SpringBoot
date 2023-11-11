@@ -2,9 +2,11 @@ package khpi.kvp.webstore_spring.controllers;
 
 import khpi.kvp.webstore_spring.dto.ProductDTO;
 import khpi.kvp.webstore_spring.models.Category;
+import khpi.kvp.webstore_spring.models.OrderItem;
 import khpi.kvp.webstore_spring.models.Product;
 import khpi.kvp.webstore_spring.repositories.OrderItemRepository;
 import khpi.kvp.webstore_spring.services.CategoryService;
+import khpi.kvp.webstore_spring.services.EmailService;
 import khpi.kvp.webstore_spring.services.OrderService;
 import khpi.kvp.webstore_spring.services.ProductService;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +20,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -31,7 +35,9 @@ public class AdminController {
     @Autowired
     OrderItemRepository orderItemRepository;
     @Autowired
-    private OrderService orderService;
+    OrderService orderService;
+    @Autowired
+    EmailService emailService;
     @GetMapping("/admin")
     public String adminHome(Model model) {
         model.addAttribute("categories", categoryService.getAll());
@@ -138,6 +144,19 @@ public class AdminController {
     @GetMapping("/admin/orders/delete/{id}")
     public String deleteOrder(@PathVariable("id") Long orderId) {
         orderService.deleteOrder(orderId);
+        return "redirect:/admin/orders";
+    }
+
+    @GetMapping("/admin/orders/sendEmail")
+    public String getSendEmailForm(Model model) {
+        model.addAttribute("categories", categoryService.getAll());
+        return "sendOrders";
+    }
+
+    @PostMapping("/admin/orders/sendEmail")
+    public String handleFormSubmission(@RequestParam String email, @RequestParam LocalDate date) {
+        List<OrderItem> orderItems= orderItemRepository.findAll();
+        emailService.sendEmailWithAttachment(email, orderItems, date);
         return "redirect:/admin/orders";
     }
 }

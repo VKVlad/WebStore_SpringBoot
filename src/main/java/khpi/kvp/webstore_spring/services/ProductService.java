@@ -7,17 +7,13 @@ import jakarta.persistence.criteria.Root;
 import khpi.kvp.webstore_spring.dto.ProductFiltersDTO;
 import khpi.kvp.webstore_spring.models.Product;
 import khpi.kvp.webstore_spring.repositories.ProductRepository;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.query.QueryUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class ProductService{

@@ -1,6 +1,5 @@
 package khpi.kvp.webstore_spring.dto;
 
-import jakarta.persistence.*;
 import khpi.kvp.webstore_spring.models.OrderItem;
 import lombok.Data;
 

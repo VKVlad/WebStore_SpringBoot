@@ -3,15 +3,9 @@ package khpi.kvp.webstore_spring.controllers;
 import jakarta.servlet.http.HttpSession;
 import khpi.kvp.webstore_spring.configuration.CustomUserDetails;
 import khpi.kvp.webstore_spring.dto.OrderDTO;
-import khpi.kvp.webstore_spring.dto.ProductDTO;
-import khpi.kvp.webstore_spring.models.Category;
-import khpi.kvp.webstore_spring.models.Product;
 import khpi.kvp.webstore_spring.services.CartService;
 import khpi.kvp.webstore_spring.services.CategoryService;
-import khpi.kvp.webstore_spring.services.ProductService;
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.stereotype.Controller;
@@ -20,8 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import javax.management.openmbean.CompositeData;
 
 @Controller
 public class CartController {

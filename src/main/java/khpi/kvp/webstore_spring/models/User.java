@@ -3,7 +3,9 @@ package khpi.kvp.webstore_spring.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.util.List;
