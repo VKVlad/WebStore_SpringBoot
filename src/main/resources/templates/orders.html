@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" type="text/css" href="/css/table.css">
+  <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
+  <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+  <title>Document</title>
+</head>
+<body>
+<div class="sidebar close">
+  <div class="logo-details">
+    <i class='bx bxl-java' ></i>
+    <span class="logo_name">ITech</span>
+  </div>
+  <ul class="nav-links">
+    <li>
+      <a href="#">
+        <i class='bx bx-menu'></i>
+        <span class="link_name">Menu</span>
+      </a>
+      <ul class="sub-menu blank">
+        <li><a class="link_name" href="#">Menu</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#" th:href="@{/}">
+        <i class='bx bx-grid-alt' ></i>
+        <span class="link_name">Home</span>
+      </a>
+      <ul class="sub-menu blank">
+        <li><a class="link_name" th:href="@{/}">Home</a></li>
+      </ul>
+    </li>
+    <li>
+      <div class="iocn-link">
+        <a href="#">
+          <i class='bx bx-collection' ></i>
+          <span class="link_name">Category</span>
+        </a>
+        <i class='bx bxs-chevron-down arrow' ></i>
+      </div>
+      <ul class="sub-menu">
+        <li><a class="link_name" href="#">Category</a></li>
+        <li th:each="category : ${categories}">
+          <a th:text="${category.name}" href="#" th:href="@{'/shop/category/' + ${category.id}}"></a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="#" th:href="@{/shop}">
+        <i class='bx bx-laptop' ></i>
+        <span class="link_name">Products</span>
+      </a>
+      <ul class="sub-menu blank">
+        <li><a class="link_name" th:href="@{/shop}" href="#" >Products</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#" th:href="@{/cart}">
+        <i class='bx bx-cart-alt'></i>
+        <span class="link_name">Cart <span class="cart-count" th:text="${cartCount}"></span></span>
+      </a>
+      <ul class="sub-menu blank">
+        <li><a class="link_name" th:href="@{/cart}" href="#">Cart</a></li>
+      </ul>
+    </li>
+    <li>
+      <div class="iocn-link">
+        <a href="#" th:href="@{'/admin'}">
+          <i class='bx bx-cog'></i>
+          <span class="link_name">Settings</span>
+        </a>
+        <i class='bx bxs-chevron-down arrow' ></i>
+      </div>
+      <ul class="sub-menu">
+        <li><a class="link_name" href="#" th:href="@{'/admin'}">Settings</a></li>
+        <li><a href="#" th:href="@{'/admin/categories'}">Categories</a></li>
+        <li><a href="#" th:href="@{'/admin/products'}">Products</a></li>
+        <li><a href="#" th:href="@{'/admin/orders'}">Orders</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#" th:href="@{/logout}" th:action="@{/logout}" th:method="post">
+        <i class='bx bx-log-out' style="color: rgb(255, 0, 0);"></i>
+        <span class="link_name logout-link" style="color: rgb(255, 0, 0);">LogIn/Out</span>
+      </a>
+      <ul class="sub-menu blank">
+        <li><a class="link_name" href="#" th:href="@{/logout}" th:action="@{/logout}" th:method="post">LogIn/Out</a></li>
+      </ul>
+    </li>
+  </ul>
+</div>
+<div class="container">
+
+  <a th:href="@{/admin/orders/sendEmail}" style="margin: 20px 0" class="btn btn-primary">Send on Email</a>
+  <table class="table" id="orderTable">
+    <thead class="thead-light">
+    <tr>
+      <th scope="col" data-sortable="false">ID</th>
+      <th scope="col">Name</th>
+      <th scope="col">Surname</th>
+      <th scope="col" data-sortable="false">Phone</th>
+      <th scope="col" data-sortable="false">Email</th>
+      <th scope="col">City</th>
+      <th scope="col">Address1</th>
+      <th scope="col">Address2</th>
+      <th scope="col">PostCode</th>
+      <th scope="col">DateTime</th>
+      <th scope="col">Article</th>
+      <th scope="col" data-sortable="false">Description</th>
+      <th scope="col" data-sortable="false">Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr th:each="orderItem: ${orderItems}">
+      <th th:text="${orderItem.orders.id}"></th>
+      <td th:text="${orderItem.orders.firstName}"></td>
+      <td th:text="${orderItem.orders.lastName}"></td>
+      <td th:text="${orderItem.orders.phone}"></td>
+      <td th:text="${orderItem.orders.email}"></td>
+      <td th:text="${orderItem.orders.city}"></td>
+      <td th:text="${orderItem.orders.address1}"></td>
+      <td th:text="${orderItem.orders.address2}"></td>
+      <td th:text="${orderItem.orders.postCode}"></td>
+      <td th:text="${orderItem.orders.dateTime}"></td>
+      <td th:text="${orderItem.product.article}"></td>
+      <td th:text="${orderItem.orders.description}"></td>
+      <td><a href="" th:href="@{/admin/orders/delete/{id}(id=${orderItem.orders.id})}" class="btn btn-danger">Delete</a></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<script>
+  let arrow = document.querySelectorAll(".arrow");
+  for (var i = 0; i < arrow.length; i++) {
+    arrow[i].addEventListener("click", (e)=>{
+      let arrowParent = e.target.parentElement.parentElement;//selecting main parent of arrow
+      arrowParent.classList.toggle("showMenu");
+    });
+  }
+  let sidebar = document.querySelector(".sidebar");
+  let sidebarBtn = document.querySelector(".bx-menu");
+  console.log(sidebarBtn);
+  sidebarBtn.addEventListener("click", ()=>{
+    sidebar.classList.toggle("close");
+  });
+
+  $(document).ready( function () {
+    $('#orderTable').DataTable();
+  } );
+</script>
+</body>
+</html>

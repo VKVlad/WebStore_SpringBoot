@@ -6,12 +6,7 @@
     box-sizing: border-box;
     font-family: 'Montserrat', sans-serif;
 }
-body {
-    margin-left: 60px;
-    margin-top: 50px;
-    background-color: #c5cdfd;
-    background: linear-gradient(to right, #e2e2e2, #c5cdfd);
-}
+
 
 .container {
     display: flex;
@@ -531,4 +526,41 @@ label {
 .search-bar {
     text-align: center;
     margin-top: 20px;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #c5cdfd;
+    background: linear-gradient(to right, #e2e2e2, #c5cdfd);
+}
+
+.content {
+    text-align: center;
+}
+
+.content h1 {
+    font-size: 300px;
+    background: linear-gradient(to right, #01b2b2, #015562);
+    -webkit-background-clip: text; /* для поддержки веб-кит браузерами */
+    color: transparent; /* делает текст прозрачным, чтобы видеть градиентный фон через текст */
+    text-align: center;
+}
+
+
+.explore-btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 36px;
+    background-color: #f30;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 20px;
+}
+.explore-btn:hover {
+    background-color: #d32c01;
 }

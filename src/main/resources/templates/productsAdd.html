@@ -5,41 +5,95 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
-          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+    <link rel="stylesheet" type="text/css" href="/css/productAdd.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <title>Document</title>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-            <img th:src="@{/images/logo.png}" src="../static/images/logo.png" width="auto" height="40"
-                 class="d-inline-block align-top" alt=""/>
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto"></ul>
-            <ul class="navbar-nav">
-                <li class="nav-item active">
-                    <a class="nav-link" th:href="@{/admin}" href="#">admin-home</a>
-                </li>
-                <li class="nav-item active">
-                    <form th:action="@{/logout}" method="post">
-                        <input type="submit" value="Logout" />
-                    </form>
-                </li>
-
-            </ul>
-
-        </div>
+<div class="sidebar close">
+    <div class="logo-details">
+        <i class='bx bxl-java' ></i>
+        <span class="logo_name">ITech</span>
     </div>
-</nav>
+    <ul class="nav-links">
+        <li>
+            <a href="#">
+                <i class='bx bx-menu'></i>
+                <span class="link_name">Menu</span>
+            </a>
+            <ul class="sub-menu blank">
+                <li><a class="link_name" href="#">Menu</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#" th:href="@{/}">
+                <i class='bx bx-grid-alt' ></i>
+                <span class="link_name">Home</span>
+            </a>
+            <ul class="sub-menu blank">
+                <li><a class="link_name" th:href="@{/}">Home</a></li>
+            </ul>
+        </li>
+        <li>
+            <div class="iocn-link">
+                <a href="#">
+                    <i class='bx bx-collection' ></i>
+                    <span class="link_name">Category</span>
+                </a>
+                <i class='bx bxs-chevron-down arrow' ></i>
+            </div>
+            <ul class="sub-menu">
+                <li><a class="link_name" href="#">Category</a></li>
+                <li th:each="category : ${categories}">
+                    <a th:text="${category.name}" href="#" th:href="@{'/shop/category/' + ${category.id}}"></a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="#" th:href="@{/shop}">
+                <i class='bx bx-laptop' ></i>
+                <span class="link_name">Products</span>
+            </a>
+            <ul class="sub-menu blank">
+                <li><a class="link_name" th:href="@{/shop}" href="#" >Products</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#" th:href="@{/cart}">
+                <i class='bx bx-cart-alt'></i>
+                <span class="link_name">Cart <span class="cart-count" th:text="${cartCount}"></span></span>
+            </a>
+            <ul class="sub-menu blank">
+                <li><a class="link_name" th:href="@{/cart}" href="#">Cart</a></li>
+            </ul>
+        </li>
+        <li>
+            <div class="iocn-link">
+                <a href="#" th:href="@{'/admin'}">
+                    <i class='bx bx-cog'></i>
+                    <span class="link_name">Settings</span>
+                </a>
+                <i class='bx bxs-chevron-down arrow' ></i>
+            </div>
+            <ul class="sub-menu">
+                <li><a class="link_name" href="#" th:href="@{'/admin'}">Settings</a></li>
+                <li><a href="#" th:href="@{'/admin/categories'}">Categories</a></li>
+                <li><a href="#" th:href="@{'/admin/products'}">Products</a></li>
+                <li><a href="#" th:href="@{'/admin/orders'}">Orders</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#" th:href="@{/logout}" th:action="@{/logout}" th:method="post">
+                <i class='bx bx-log-out' style="color: rgb(255, 0, 0);"></i>
+                <span class="link_name logout-link" style="color: rgb(255, 0, 0);">LogIn/Out</span>
+            </a>
+            <ul class="sub-menu blank">
+                <li><a class="link_name" href="#" th:href="@{/logout}" th:action="@{/logout}" th:method="post">LogIn/Out</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
 <div class="container">
     <h3>Add a new Product</h3>
     <form th:action="@{/admin/products/add}" method="post" th:object="${productDTO}" enctype="multipart/form-data">
@@ -61,12 +115,17 @@
                     </select>
                 </div>
                 <div class="form-group">
+                    <label for="article">Article</label>
+                    <input type="number" class="form-control" required th:field="*{article}" name="price" id="article"
+                           placeholder="Article">
+                </div>
+                <div class="form-group">
                     <label for="price">Price</label>
                     <input type="number" class="form-control" required th:field="*{price}" name="price" id="price"
                            placeholder="Price">
                 </div>
                 <div class="form-group">
-                    <label for="priceOpt">Weight in grams</label>
+                    <label for="priceOpt">Price Opt</label>
                     <input type="number" class="form-control" required th:field="*{priceOpt}" name="priceOpt" id="priceOpt"
                            placeholder="PriceOpt">
                 </div>
@@ -91,7 +150,21 @@
     </form>
 </div>
 
-
+<script>
+    let arrow = document.querySelectorAll(".arrow");
+    for (var i = 0; i < arrow.length; i++) {
+        arrow[i].addEventListener("click", (e)=>{
+            let arrowParent = e.target.parentElement.parentElement;//selecting main parent of arrow
+            arrowParent.classList.toggle("showMenu");
+        });
+    }
+    let sidebar = document.querySelector(".sidebar");
+    let sidebarBtn = document.querySelector(".bx-menu");
+    console.log(sidebarBtn);
+    sidebarBtn.addEventListener("click", ()=>{
+        sidebar.classList.toggle("close");
+    });
+</script>
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
         crossorigin="anonymous"></script>

@@ -3,196 +3,124 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
-
-    <title>Document</title>
+    <title>Product Card UI Design</title>
+    <link rel="stylesheet" type="text/css" href="/css/cart.css">
+    <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>View</title>
 </head>
 <body>
-
-
-<nav class="navbar navbar-expand-lg navbar-light bg-light" >
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-            <img th:src="@{/images/logo.png}"  src="../static/images/logo.png" width="auto" height="40" class="d-inline-block align-top" alt=""/>
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto"></ul>
-            <ul class="navbar-nav">
-                <li class="nav-item active">
-                    <a class="nav-link" th:href="@{/}" href="#">home</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" th:href="@{/shop}" href="#">shop</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/login}" href="#">login</a>
-                </li>
-                <li class="nav-item active">
-                    <form th:action="@{/logout}" method="post">
-                        <input type="submit" value="Logout" />
-                    </form>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" th:href="@{/cart}" href="#">cart</a>
-                </li>
-                <li class="nav-item active">
-                    <span class="nav-link" th:text="${cartCount}">0</span>
+<div class="sidebar close">
+    <div class="logo-details">
+        <i class='bx bxl-java' ></i>
+        <span class="logo_name">ITech</span>
+    </div>
+    <ul class="nav-links">
+        <li>
+            <a href="#">
+                <i class='bx bx-menu'></i>
+                <span class="link_name">Menu</span>
+            </a>
+            <ul class="sub-menu blank">
+                <li><a class="link_name" href="#">Menu</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#" th:href="@{/}">
+                <i class='bx bx-grid-alt' ></i>
+                <span class="link_name">Home</span>
+            </a>
+            <ul class="sub-menu blank">
+                <li><a class="link_name" th:href="@{/}">Home</a></li>
+            </ul>
+        </li>
+        <li>
+            <div class="iocn-link">
+                <a href="#">
+                    <i class='bx bx-collection' ></i>
+                    <span class="link_name">Category</span>
+                </a>
+                <i class='bx bxs-chevron-down arrow' ></i>
+            </div>
+            <ul class="sub-menu">
+                <li><a class="link_name" href="#">Category</a></li>
+                <li th:each="category : ${categories}">
+                    <a th:text="${category.name}" href="#" th:href="@{'/shop/category/' + ${category.id}}"></a>
                 </li>
             </ul>
+        </li>
+        <li>
+            <a href="#" th:href="@{/shop}">
+                <i class='bx bx-laptop' ></i>
+                <span class="link_name">Products</span>
+            </a>
+            <ul class="sub-menu blank">
+                <li><a class="link_name" th:href="@{/shop}" href="#" >Products</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#" th:href="@{/cart}">
+                <i class='bx bx-cart-alt'></i>
+                <span class="link_name">Cart <span class="cart-count" th:text="${cartCount}"></span></span>
+            </a>
+            <ul class="sub-menu blank">
+                <li><a class="link_name" th:href="@{/cart}" href="#">Cart</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#" th:href="@{/logout}" th:action="@{/logout}" th:method="post">
+                <i class='bx bx-log-out' style="color: rgb(255, 0, 0);"></i>
+                <span class="link_name logout-link" style="color: rgb(255, 0, 0);">LogIn/Out</span>
+            </a>
+            <ul class="sub-menu blank">
+                <li><a class="link_name" href="#" th:href="@{/logout}" th:action="@{/logout}" th:method="post">LogIn/Out</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
 
-        </div>
+<div class="wrap cf">
+    <h1 class="projTitle">Shopping Cart</h1>
+    <div class="heading cf">
+        <h1>My Cart</h1>
+        <a href="#" th:href="@{/shop}" class="continue">Continue Shopping</a>
     </div>
-</nav>
-<main>
-    <div class="container">
-
-        <!--Section: Block Content-->
-        <section class="mt-5 mb-4">
-
-            <!--Grid row-->
-            <div class="row">
-
-                <!--Grid column-->
-                <div class="col-lg-8">
-
-                    <!-- Card -->
-                    <div class="card wish-list mb-4">
-                        <div class="card-body">
-                            <h5 class="mb-4">Cart (<span th:text="${cartCount}">2</span> items)</h5>
-                            <div class="row mb-4" th:each="item : ${cart}">
-                                <div class="col-md-5 col-lg-3 col-xl-3">
-                                    <div class="mb-3 mb-md-0">
-                                        <img class="img-fluid w-100"
-                                             th:src="@{${'/images/' + item.key.imageName}}"
-                                             src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/12a.jpg"
-                                             alt="Sample">
-                                    </div>
-                                </div>
-                                <div class="col-md-7 col-lg-9 col-xl-9">
-                                    <div>
-                                        <div class="d-flex justify-content-between">
-                                            <div>
-                                                <h5 th:text="${item.key.name}">Blue denim shirt</h5>
-                                                <p class="mb-3 text-uppercase small">PriceOpt: <span th:text="${item.key.priceOpt}"></span> grams</p>
-                                            </div>
-                                        </div>
-                                        <div class="mt-5 d-flex justify-content-between align-items-center">
-                                            <div>
-                                                <!-- Добавьте форму для редактирования количества и кнопку "Обновить" -->
-                                                <form th:action="@{/cart/updateQuantity/{id}(id=${item.key.getId()})}" method="post">
-                                                    <button type="button" class="btn btn-primary quantity-button" onclick="changeQuantity(this, -1)">-</button>
-                                                    <span th:text="${item.value}" class="quantity-display"></span>
-                                                    <button type="button" class="btn btn-primary quantity-button" onclick="changeQuantity(this, 1)">+</button>
-                                                    <!-- Добавьте скрытое поле для передачи newQuantity в контроллер -->
-                                                    <input type="hidden" name="newQuantity" th:value="${item.value}" />
-                                                    <button type="submit" class="btn btn-success">Update</button>
-                                                </form>
-                                                <a href="#!" th:href="@{/cart/removeItem/{id}(id=${item.key.getId()})}" type="button" class="card-link-secondary small text-uppercase mr-3"><i class="fas fa-trash-alt mr-1"></i> Remove item</a>
-                                            </div>
-                                            <p class="mb-0"><span><strong>₹<span th:text="${item.key.price * item.value}"></span></strong></span></p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr class="mb-4">
-                            <p class="text-primary mb-0"><i class="fas fa-info-circle mr-1"></i> Do not delay the purchase, adding items to your cart does not mean booking them.</p>
-                        </div>
+    <div class="cart">
+        <ul class="cartWrap">
+            <li class="items odd">
+                <div class="infoWrap" th:each="item : ${cart}">
+                    <div class="cartSection">
+                        <img th:src="@{${'/images/' + item.key.imageName}}" alt="" class="itemImg" />
+                        <p class="itemNumber" th:text="${item.key.article}"></p>
+                        <h3 th:text="${item.key.name}"></h3>
+                        <p><input type="text"  class="qty" th:placeholder="${item.value}"/><i class='bx bx-x'></i><p th:text="${item.key.price}"></p></p>
                     </div>
 
-
-
-
-
+                    <div class="prodTotal cartSection">
+                        <p>$<p th:text="${item.key.price * item.value}"></p></p>
+                    </div>
+                    <div class="cartSection removeWrap">
+                        <a href="#" class="remove" th:href="@{/cart/removeItem/{id}(id=${item.key.getId()})}" type="button">x</a>
+                    </div>
                 </div>
-                <!--Grid column-->
-
-                <!--Grid column-->
-                <div class="col-lg-4">
-
-                    <!-- Card -->
-                    <div class="card mb-4">
-                        <div class="card-body">
-
-                            <h5 class="mb-3">The total amount </h5>
-
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
-                                    Amount Payable
-                                    <span>₹<span th:text="${total}"></span></span>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center px-0">
-                                    Shipping
-                                    <span>Gratis</span>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
-                                    <div>
-                                        <strong>The total amount of</strong>
-                                        <strong>
-                                            <p class="mb-0">(including VAT)</p>
-                                        </strong>
-                                    </div>
-                                    <span><strong>₹<span th:text="${total}"></span></strong></span>
-                                </li>
-                            </ul>
-
-                            <a th:href="@{/checkout}" h class="btn btn-primary btn-block waves-effect waves-light">go to
-                                checkout</a>
-
-                        </div>
-                    </div>
-                    <!-- Card -->
-
-                    <!-- Card -->
-                    <div class="card mb-4">
-                        <div class="card-body">
-
-                            <a class="dark-grey-text d-flex justify-content-between" data-toggle="collapse" href="#collapseExample"
-                               aria-expanded="false" aria-controls="collapseExample">
-                                Add a discount code (optional)
-                                <span><i class="fas fa-chevron-down pt-1"></i></span>
-                            </a>
-
-                            <div class="collapse" id="collapseExample">
-                                <div class="mt-3">
-                                    <div class="md-form md-outline mb-0">
-                                        <input type="text" id="discount-code" class="form-control font-weight-light"
-                                               placeholder="Enter discount code">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Card -->
-
-                </div>
-                <!--Grid column-->
-
-            </div>
-            <!--Grid row-->
-
-        </section>
-        <!--Section: Block Content-->
-
+            </li>
+        </ul>
     </div>
-</main>
-<!--Main layout-->
+
+    <div class="subtotal cf">
+        <ul>
+            <li class="totalRow final"><span class="label">Total</span><span class="value">$</span><span th:text="${total}"></span></li>
+            <li class="totalRow"><a href="#" th:href="@{/checkout}" class="btn continue">Checkout</a></li>
+        </ul>
+    </div>
+</div>
 
 
 
 
-
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 </body>
 <script th:inline="javascript">
     function changeQuantity(button, delta) {
@@ -206,5 +134,18 @@
             form.querySelector('input[name="newQuantity"]').value = newValue;
         }
     }
+    let arrow = document.querySelectorAll(".arrow");
+    for (var i = 0; i < arrow.length; i++) {
+        arrow[i].addEventListener("click", (e)=>{
+            let arrowParent = e.target.parentElement.parentElement;//selecting main parent of arrow
+            arrowParent.classList.toggle("showMenu");
+        });
+    }
+    let sidebar = document.querySelector(".sidebar");
+    let sidebarBtn = document.querySelector(".bx-menu");
+    console.log(sidebarBtn);
+    sidebarBtn.addEventListener("click", ()=>{
+        sidebar.classList.toggle("close");
+    });
 </script>
 </html>

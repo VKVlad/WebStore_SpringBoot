@@ -7,6 +7,7 @@ import khpi.kvp.webstore_spring.dto.ProductDTO;
 import khpi.kvp.webstore_spring.models.Category;
 import khpi.kvp.webstore_spring.models.Product;
 import khpi.kvp.webstore_spring.services.CartService;
+import khpi.kvp.webstore_spring.services.CategoryService;
 import khpi.kvp.webstore_spring.services.ProductService;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +21,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.management.openmbean.CompositeData;
+
 @Controller
 public class CartController {
     @Autowired
     CartService cartService;
+    @Autowired
+    CategoryService categoryService;
 
     @PostMapping("/addToCart/{id}")
     public String addToCart(@PathVariable Long id, @RequestParam int quantity, HttpSession session) {
@@ -36,6 +41,7 @@ public class CartController {
         model.addAttribute("cartCount", cartService.getCartSize(session));
         model.addAttribute("total", cartService.calculateTotal(session));
         model.addAttribute("cart", cartService.getCart(session));
+        model.addAttribute("categories", categoryService.getAll());
         return "cart";
     }
 
@@ -49,20 +55,22 @@ public class CartController {
     public String checkout(Model model, HttpSession session, Authentication authentication) {
         if (authentication != null && authentication.isAuthenticated()) {
             if (authentication.getPrincipal() instanceof DefaultOidcUser oidcUser) {
-                model.addAttribute("total", cartService.calculateTotal(session));
                 OrderDTO orderDTO = new OrderDTO();
                 orderDTO.setFirstName(oidcUser.getGivenName());
                 orderDTO.setLastName(oidcUser.getFamilyName());
                 orderDTO.setEmail(oidcUser.getEmail());
                 model.addAttribute("orderDTO", orderDTO);
+                model.addAttribute("cartCount", cartService.getCartSize(session));
+                model.addAttribute("categories", categoryService.getAll());
                 return "checkout";
             } else if (authentication.getPrincipal() instanceof CustomUserDetails user) {
-                model.addAttribute("total", cartService.calculateTotal(session));
                 OrderDTO orderDTO = new OrderDTO();
                 orderDTO.setFirstName(user.getFirstName());
                 orderDTO.setLastName(user.getLastName());
                 orderDTO.setEmail(user.getEmail());
                 model.addAttribute("orderDTO", orderDTO);
+                model.addAttribute("cartCount", cartService.getCartSize(session));
+                model.addAttribute("categories", categoryService.getAll());
                 return "checkout";
             }
         }

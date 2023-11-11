@@ -51,15 +51,6 @@ public class OrderController {
         order.setCity(orderDTO.getCity());
         order.setDescription(orderDTO.getDescription());
         orderRepository.save(order);
-        return "redirect:/orderPlaced";
-    }
-
-    @GetMapping("/orderPlaced")
-    public String orderPlaced(Model model, HttpSession session) {
-        Map<Product, Integer> cartRecipe = cartService.getCart(session);
-        Map<Product, Integer> cartCopy = new HashMap<>(cartRecipe);
-        model.addAttribute("cartSet", cartCopy);
-        cartService.clear(session);
-        return "orderPlaced";
+        return "redirect:/shop";
     }
 }

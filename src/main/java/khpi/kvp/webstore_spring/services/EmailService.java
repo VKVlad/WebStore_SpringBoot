@@ -10,11 +10,11 @@ public class EmailService {
     @Autowired
     private JavaMailSender javaMailSender;
 
-    public void sendEmailFromTemplate(String toEmail, String verificationCode) {
+    public void sendEmail(String toEmail, String verificationCode) {
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
         simpleMailMessage.setTo(toEmail);
-        simpleMailMessage.setSubject("Code: ");
-        simpleMailMessage.setText(verificationCode);
+        simpleMailMessage.setSubject("Your Verification code for ITech");
+        simpleMailMessage.setText("Code: " + verificationCode);
         javaMailSender.send(simpleMailMessage);
     }
 }

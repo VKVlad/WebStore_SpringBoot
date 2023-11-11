@@ -3,7 +3,9 @@ package khpi.kvp.webstore_spring.controllers;
 import khpi.kvp.webstore_spring.dto.ProductDTO;
 import khpi.kvp.webstore_spring.models.Category;
 import khpi.kvp.webstore_spring.models.Product;
+import khpi.kvp.webstore_spring.repositories.OrderItemRepository;
 import khpi.kvp.webstore_spring.services.CategoryService;
+import khpi.kvp.webstore_spring.services.OrderService;
 import khpi.kvp.webstore_spring.services.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +28,13 @@ public class AdminController {
     CategoryService categoryService;
     @Autowired
     ProductService productService;
+    @Autowired
+    OrderItemRepository orderItemRepository;
+    @Autowired
+    private OrderService orderService;
     @GetMapping("/admin")
-    public String adminHome() {
+    public String adminHome(Model model) {
+        model.addAttribute("categories", categoryService.getAll());
         return "adminHome";
     }
     @GetMapping("/admin/categories")
@@ -38,6 +45,7 @@ public class AdminController {
     @GetMapping("/admin/categories/add")
     public String getCategoriesAdd(Model model) {
         model.addAttribute("category", new Category());
+        model.addAttribute("categories", categoryService.getAll());
         return "categoriesAdd";
     }
 
@@ -64,6 +72,7 @@ public class AdminController {
     //Products
     @GetMapping("/admin/products")
     public String getProducts(Model model) {
+        model.addAttribute("categories", categoryService.getAll());
         model.addAttribute("products", productService.getAll());
         return "products";
     }
@@ -117,5 +126,18 @@ public class AdminController {
         model.addAttribute("categories", categoryService.getAll());
         model.addAttribute("productDTO", productDTO);
         return "productsAdd";
+    }
+
+    @GetMapping("/admin/orders")
+    public String getOrders(Model model) {
+        model.addAttribute("categories", categoryService.getAll());
+        model.addAttribute("orderItems", orderItemRepository.findAll());
+        return "orders";
+    }
+
+    @GetMapping("/admin/orders/delete/{id}")
+    public String deleteOrder(@PathVariable("id") Long orderId) {
+        orderService.deleteOrder(orderId);
+        return "redirect:/admin/orders";
     }
 }

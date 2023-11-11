@@ -84,7 +84,7 @@ public class LoginController {
         user.setRoles(roles);
 
         //Email confirmation
-        emailService.sendEmailFromTemplate(user.getEmail(), user.getConfirmationCode());
+        emailService.sendEmail(user.getEmail(), user.getConfirmationCode());
 
         //Firstname
         user.setFirstName(userDTO.getFirstName());
